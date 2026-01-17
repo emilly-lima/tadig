@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>TADIG - Web Comic</title>
+
+  <!-- Fonte -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- JS -->
+  <script defer src="index.js"></script>
+</head>
+
+<body>
+
+<header>
+  <div class="header-container">
+    <h1>TADIG - Web Comic</h1>
+
+    <div class="player-ctrl">
+      <a id="podcast-play" onclick="playShow()">
+        <img src="assets/play.png" alt="Play">
+      </a>
+
+      <a id="podcast-pause" onclick="pauseShow()" style="display:none;">
+        <img src="assets/pausa.png" alt="Pause">
+      </a>
+    </div>
+
+    <audio id="podcast-audio" loop>
+      <source src="audio/theme.wav" type="audio/wav">
+    </audio>
+  </div>
+</header>
+
+<main>
+  <section class="comic-container">
+
+    <div class="comic-grid">
+
+      <div class="comic-panel">
+        <img src="assets/raios.gif" alt="Quadro 1">
+      </div>
+
+      <div class="comic-panel">
+        <img src="assets/Janela-100.jpg" alt="Quadro 2">
+      </div>
+
+      <div class="comic-panel">
+        <img src="assets/Prancheta 10-100.jpg" alt="Quadro 3">
+      </div>
+
+      <!-- Exemplo de painel largo -->
+      
+      <div class="comic-panel panel-wide">
+        <img src="assets/Prancheta 5-100.jpg" alt="Painel especial">
+      </div>
+      
+
+    </div>
+
+  </section>
+</main>
+
+<footer>
+  footer content
+</footer>
+
+</body>
+</html>
