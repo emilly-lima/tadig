@@ -1,16 +1,18 @@
-
 /* ==========================
-   LANTERNA (já existente)
+   LANTERNA + POSIÇÃO DO MOUSE
 ========================== */
+
+let mouseY = window.innerHeight / 2;
 
 function update(e) {
   const x = e.clientX || e.touches?.[0].clientX;
   const y = e.clientY || e.touches?.[0].clientY;
 
-  document.documentElement.style.setProperty('--cursorX', x + 'px');
-  document.documentElement.style.setProperty('--cursorY', y + 'px');
-
-  mouseY = y;
+  if (x !== undefined && y !== undefined) {
+    document.documentElement.style.setProperty('--cursorX', x + 'px');
+    document.documentElement.style.setProperty('--cursorY', y + 'px');
+    mouseY = y;
+  }
 }
 
 document.addEventListener('mousemove', update);
@@ -18,31 +20,24 @@ document.addEventListener('touchmove', update);
 
 
 /* ==========================
-   SCROLL POR POSIÇÃO DO MOUSE
+   SCROLL AUTOMÁTICO POR BORDA
 ========================== */
 
-let mouseY = window.innerHeight / 2;
-const edgeSize = 120;       // área sensível (px)
-const maxSpeed = 12;        // velocidade máxima
+const edgeSize = 120;
+const maxSpeed = 12;
 
 function autoScroll() {
-  const viewportHeight = window.innerHeight;
-  let scrollSpeed = 0;
+  const vh = window.innerHeight;
+  let speed = 0;
 
-  // TOPO
   if (mouseY < edgeSize) {
-    scrollSpeed = -maxSpeed * (1 - mouseY / edgeSize);
+    speed = -maxSpeed * (1 - mouseY / edgeSize);
+  } else if (mouseY > vh - edgeSize) {
+    speed = maxSpeed * (1 - (vh - mouseY) / edgeSize);
   }
 
-  // BASE
-  else if (mouseY > viewportHeight - edgeSize) {
-    scrollSpeed =
-      maxSpeed *
-      (1 - (viewportHeight - mouseY) / edgeSize);
-  }
-
-  if (scrollSpeed !== 0) {
-    window.scrollBy(0, scrollSpeed);
+  if (speed !== 0) {
+    window.scrollBy(0, speed);
   }
 
   requestAnimationFrame(autoScroll);
@@ -52,7 +47,41 @@ autoScroll();
 
 
 /* ==========================
-   PLAYER DE ÁUDIO 
+   CONTROLE ROBUSTO DA LANTERNA
+========================== */
+
+const finalPanel = document.querySelector('.final-panel');
+const root = document.documentElement;
+
+let lanternDisabledByFinalPanel = false;
+
+if (finalPanel) {
+  finalPanel.addEventListener('mouseenter', () => {
+    lanternDisabledByFinalPanel = true;
+    root.classList.add('no-lantern');
+  });
+
+  finalPanel.addEventListener('mouseleave', () => {
+    lanternDisabledByFinalPanel = false;
+    root.classList.remove('no-lantern');
+  });
+}
+
+window.addEventListener('mouseleave', () => {
+  if (!lanternDisabledByFinalPanel) {
+    root.classList.remove('no-lantern');
+  }
+});
+
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden && !lanternDisabledByFinalPanel) {
+    root.classList.remove('no-lantern');
+  }
+});
+
+
+/* ==========================
+   PLAYER DE ÁUDIO
 ========================== */
 
 const podcastAudio = document.getElementById('podcast-audio');
@@ -69,21 +98,4 @@ function pauseShow() {
   podcastAudio.pause();
   playBtn.style.display = "inline-block";
   pauseBtn.style.display = "none";
-}
-
-/* ==========================
-   CONTROLE DA LANTERNA FINAL
-========================== */
-
-const finalPanel = document.querySelector('.final-panel');
-const root = document.documentElement;
-
-if (finalPanel) {
-  finalPanel.addEventListener('mouseenter', () => {
-    root.classList.add('no-lantern');
-  });
-
-  finalPanel.addEventListener('mouseleave', () => {
-    root.classList.remove('no-lantern');
-  });
 }

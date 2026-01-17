@@ -142,8 +142,6 @@ footer {
   transition: opacity 0.6s ease;
 }
 
-
-
 /* Mobile */
 @media (max-width: 768px) {
   .comic-row.two {
