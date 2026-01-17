@@ -1,117 +1,116 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TADIG - Web Comic</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <title>TADIG - Web Comic</title>
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap"
-    rel="stylesheet"
-  >
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
 
-  <link rel="stylesheet" href="style.css">
-  <script defer src="index.js"></script>
-</head>
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="index.js"></script>
+  </head>
 
-<body>
+  <body>
+    <header>
+      <div class="header-container">
+        <h1>TADIG - Web Comic</h1>
 
-<header>
-  <div class="header-container">
-    <h1>TADIG - Web Comic</h1>
+        <div class="player-ctrl">
+          <a id="podcast-play" onclick="playShow()">
+            <img src="assets/play.png" />
+          </a>
+          <a id="podcast-pause" onclick="pauseShow()" style="display: none">
+            <img src="assets/pausa.png" />
+          </a>
+        </div>
 
-    <div class="player-ctrl">
-      <a id="podcast-play" onclick="playShow()">
-        <img src="assets/play.png">
-      </a>
-      <a id="podcast-pause" onclick="pauseShow()" style="display:none;">
-        <img src="assets/pausa.png">
-      </a>
-    </div>
+        <audio id="podcast-audio" loop>
+          <source src="audio/theme.wav" type="audio/wav" />
+        </audio>
+      </div>
+    </header>
 
-    <audio id="podcast-audio" loop>
-      <source src="audio/theme.wav" type="audio/wav">
-    </audio>
-  </div>
-</header>
+    <main class="comic-container">
+      <!-- LINHA 1 -->
+      <div class="comic-row two">
+        <div class="comic-panel rect">
+          <img src="assets/raios.gif" alt="Raios" />
+        </div>
+        <div class="comic-panel square">
+          <img src="assets/Janela-100.jpg" alt="Janela" />
+        </div>
+      </div>
 
-<main class="comic-container">
+      <!-- LINHA 2 -->
+      <div class="comic-row one">
+        <div class="comic-panel wide">
+          <img src="assets/Porta-100.jpg" alt="Porta aberta" />
+        </div>
+      </div>
 
-  <!-- LINHA 1 -->
-  <div class="comic-row two">
-    <div class="comic-panel rect">
-      <img src="assets/raios.gif" alt="Raios">
-    </div>
-    <div class="comic-panel square">
-      <img src="assets/Janela-100.jpg" alt="Janela">
-    </div>
-  </div>
+      <!-- LINHA 3 -->
+      <div class="comic-row one">
+        <div class="comic-panel wide">
+          <img src="assets/Prancheta 5-100.jpg" alt="Sala" />
+        </div>
+      </div>
 
-  <!-- LINHA 2 -->
-  <div class="comic-row one">
-    <div class="comic-panel wide">
-      <img src="assets/Porta-100.jpg" alt="Porta aberta">
-    </div>
-  </div>
+      <!-- LINHA 4 -->
+      <div class="comic-row two">
+        <div class="comic-panel rect">
+          <img src="assets/Prancheta 10-100.jpg" alt="Vidro" />
+        </div>
+        <div class="comic-panel rect">
+          <img src="assets/Prancheta 8-100.jpg" alt="Sofá" />
+        </div>
+      </div>
 
-  <!-- LINHA 3 -->
-  <div class="comic-row one">
-    <div class="comic-panel wide">
-      <img src="assets/Prancheta 5-100.jpg" alt="Sala">
-    </div>
-  </div>
+      <!-- LINHA 5 -->
+      <div class="comic-row two">
+        <div class="comic-panel rect">
+          <img src="assets/Prancheta 11-100.jpg" alt="Porta fechada" />
+        </div>
+        <div class="comic-panel rect">
+          <img src="assets/Prancheta 9-100.jpg" alt="Espelho" />
+        </div>
+      </div>
 
-  <!-- LINHA 4 -->
-  <div class="comic-row two">
-    <div class="comic-panel rect">
-      <img src="assets/Prancheta 10-100.jpg" alt="Vidro">
-    </div>
-    <div class="comic-panel rect">
-      <img src="assets/Prancheta 8-100.jpg" alt="Sofá">
-    </div>
-  </div>
+      <!-- LINHA 6 -->
+      <div class="comic-row two">
+        <div class="comic-panel rect">
+          <img src="assets/Prancheta 6-100.jpg" alt="Porta com sombra" />
+        </div>
+        <div class="comic-panel rect">
+          <img src="assets/Prancheta 14-100.jpg" alt="Porta sem sombra" />
+        </div>
+      </div>
 
-  <!-- LINHA 5 -->
-  <div class="comic-row two">
-    <div class="comic-panel rect">
-      <img src="assets/Prancheta 11-100.jpg" alt="Porta fechada">
-    </div>
-    <div class="comic-panel rect">
-      <img src="assets/Prancheta 9-100.jpg" alt="Espelho">
-    </div>
-  </div>
+      <!-- LINHA 7 -->
+      <div class="comic-row one">
+        <div class="comic-panel wide">
+          <img src="assets/Prancheta 17-100.jpg" alt="Cozinha apagada" />
+        </div>
+      </div>
 
-  <!-- LINHA 6 -->
-  <div class="comic-row two">
-    <div class="comic-panel rect">
-      <img src="assets/Prancheta 6-100.jpg" alt="Porta com sombra">
-    </div>
-    <div class="comic-panel rect">
-      <img src="assets/Prancheta 14-100.jpg" alt="Porta sem sombra">
-    </div>
-  </div>
+      <!-- LINHA 8 -->
+      <div class="comic-row one">
+        <div class="comic-panel wide final-panel">
+          <img src="assets/Prancheta 18-100.jpg" alt="Cozinha acesa" />
+        </div>
+      </div>
+    </main>
 
-  <!-- LINHA 7 -->
-  <div class="comic-row one">
-    <div class="comic-panel wide">
-      <img src="assets/Prancheta 17-100.jpg" alt="Cozinha apagada">
-    </div>
-  </div>
-
-  <!-- LINHA 8 -->
-  <div class="comic-row one">
-    <div class="comic-panel wide final-panel">
-      <img src="assets/Prancheta 18-100.jpg" alt="Cozinha acesa">
-    </div>
-  </div>
-
-</main>
-
-<footer>
-  <span>Fortaleza, 2026</span>
-  <br>
-  <span>Emilly B., Gabriel M., Giovanna C., Lara C., Lívia H., Cáceres.</span>
-</footer>
-
-</body>
+    <footer>
+      <span>Fortaleza, 2026</span>
+      <br />
+      <span
+        >Emilly B., Gabriel M., Giovanna C., Lara C., Lívia H., Cáceres.</span
+      >
+    </footer>
+  </body>
 </html>

@@ -112,12 +112,19 @@ h1 {
   inset: 0;
   pointer-events: none;
   z-index: 1;
-  background: radial-gradient(
-    circle 15vmax at var(--cursorX) var(--cursorY),
-    rgba(100, 99, 99, 0) 0%,
-    rgba(49, 49, 49, 0.6) 95%,
-    rgba(46, 45, 45, 0.95) 100%
-  );
+  backdrop-filter: blur(4px);
+  -webkit-mask-image: radial-gradient(circle 15vmax at var(--cursorX) var(--cursorY),
+      transparent 0%,
+      transparent 75%,
+      black 100%);
+  mask-image: radial-gradient(circle 15vmax at var(--cursorX) var(--cursorY),
+      transparent 0%,
+      transparent 75%,
+      black 100%);
+  background: radial-gradient(circle 15vmax at var(--cursorX) var(--cursorY),
+      rgba(100, 99, 99, 0) 0%,
+      rgba(49, 49, 49, 0.1) 95%,
+      rgba(46, 45, 45, 0.9) 100%);
 }
 
 /* Footer */
