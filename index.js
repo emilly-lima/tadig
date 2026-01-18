@@ -50,34 +50,42 @@ autoScroll();
    CONTROLE ROBUSTO DA LANTERNA
 ========================== */
 
-const finalPanel = document.querySelector('.final-panel');
+/* ==========================
+   CONTROLE ROBUSTO DA LANTERNA
+   (penúltimo + último quadro)
+========================== */
+
+const lightPanels = document.querySelectorAll('.light-panel');
 const root = document.documentElement;
 
-let lanternDisabledByFinalPanel = false;
+let lanternDisabledByLightPanel = false;
 
-if (finalPanel) {
-  finalPanel.addEventListener('mouseenter', () => {
-    lanternDisabledByFinalPanel = true;
+lightPanels.forEach(panel => {
+  panel.addEventListener('mouseenter', () => {
+    lanternDisabledByLightPanel = true;
     root.classList.add('no-lantern');
   });
 
-  finalPanel.addEventListener('mouseleave', () => {
-    lanternDisabledByFinalPanel = false;
+  panel.addEventListener('mouseleave', () => {
+    lanternDisabledByLightPanel = false;
     root.classList.remove('no-lantern');
   });
-}
+});
 
+// Mouse sai da janela
 window.addEventListener('mouseleave', () => {
-  if (!lanternDisabledByFinalPanel) {
+  if (!lanternDisabledByLightPanel) {
     root.classList.remove('no-lantern');
   }
 });
 
+// Troca de aba / foco
 document.addEventListener('visibilitychange', () => {
-  if (!document.hidden && !lanternDisabledByFinalPanel) {
+  if (!document.hidden && !lanternDisabledByLightPanel) {
     root.classList.remove('no-lantern');
   }
 });
+
 
 
 /* ==========================
