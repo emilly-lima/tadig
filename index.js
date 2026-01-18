@@ -45,11 +45,6 @@ function autoScroll() {
 
 autoScroll();
 
-
-/* ==========================
-   CONTROLE ROBUSTO DA LANTERNA
-========================== */
-
 /* ==========================
    CONTROLE ROBUSTO DA LANTERNA
    (penúltimo + último quadro)
