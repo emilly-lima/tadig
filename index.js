@@ -9,15 +9,14 @@ function update(e) {
   const y = e.clientY || e.touches?.[0].clientY;
 
   if (x !== undefined && y !== undefined) {
-    document.documentElement.style.setProperty('--cursorX', x + 'px');
-    document.documentElement.style.setProperty('--cursorY', y + 'px');
+    document.documentElement.style.setProperty("--cursorX", x + "px");
+    document.documentElement.style.setProperty("--cursorY", y + "px");
     mouseY = y;
   }
 }
 
-document.addEventListener('mousemove', update);
-document.addEventListener('touchmove', update);
-
+document.addEventListener("mousemove", update);
+document.addEventListener("touchmove", update);
 
 /* ==========================
    SCROLL AUTOMÁTICO POR BORDA
@@ -50,46 +49,46 @@ autoScroll();
    (penúltimo + último quadro)
 ========================== */
 
-const lightPanels = document.querySelectorAll('.light-panel');
+const lightPanels = document.querySelectorAll(
+  'img[alt="Panel 5"], img[alt="Panel 6"]',
+);
 const root = document.documentElement;
 
 let lanternDisabledByLightPanel = false;
 
-lightPanels.forEach(panel => {
-  panel.addEventListener('mouseenter', () => {
+lightPanels.forEach((panel) => {
+  panel.addEventListener("mouseenter", () => {
     lanternDisabledByLightPanel = true;
-    root.classList.add('no-lantern');
+    root.classList.add("no-lantern");
   });
 
-  panel.addEventListener('mouseleave', () => {
+  panel.addEventListener("mouseleave", () => {
     lanternDisabledByLightPanel = false;
-    root.classList.remove('no-lantern');
+    root.classList.remove("no-lantern");
   });
 });
 
 // Mouse sai da janela
-window.addEventListener('mouseleave', () => {
+window.addEventListener("mouseleave", () => {
   if (!lanternDisabledByLightPanel) {
-    root.classList.remove('no-lantern');
+    root.classList.remove("no-lantern");
   }
 });
 
 // Troca de aba / foco
-document.addEventListener('visibilitychange', () => {
+document.addEventListener("visibilitychange", () => {
   if (!document.hidden && !lanternDisabledByLightPanel) {
-    root.classList.remove('no-lantern');
+    root.classList.remove("no-lantern");
   }
 });
-
-
 
 /* ==========================
    PLAYER DE ÁUDIO
 ========================== */
 
-const podcastAudio = document.getElementById('podcast-audio');
-const playBtn = document.getElementById('podcast-play');
-const pauseBtn = document.getElementById('podcast-pause');
+const podcastAudio = document.getElementById("podcast-audio");
+const playBtn = document.getElementById("podcast-play");
+const pauseBtn = document.getElementById("podcast-pause");
 
 function playShow() {
   podcastAudio.play();
