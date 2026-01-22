@@ -1,38 +1,106 @@
 /* ==========================
-   LANTERNA + POSIÇÃO DO MOUSE
+   ESTADO GLOBAL E RASTREAMENTO
 ========================== */
 
+let mouseX = window.innerWidth / 2;
 let mouseY = window.innerHeight / 2;
 
-function update(e) {
-  const x = e.clientX || e.touches?.[0].clientX;
-  const y = e.clientY || e.touches?.[0].clientY;
+// Flags de controle de input
+let isTouching = false;
+let lastInputType = "MOUSE"; // 'MOUSE' ou 'TOUCH'
 
-  if (x !== undefined && y !== undefined) {
-    document.documentElement.style.setProperty("--cursorX", x + "px");
-    document.documentElement.style.setProperty("--cursorY", y + "px");
-    mouseY = y;
+const root = document.documentElement;
+
+// Atualiza posição e verifica colisão da lanterna
+function updateState(x, y) {
+  mouseX = x;
+  mouseY = y;
+
+  //Atualiza as variáveis visuais??
+  root.style.setProperty("--cursorX", x + "px");
+  root.style.setProperty("--cursorY", y + "px");
+
+  checkLanternCollision();
+}
+
+// Verifica colisão da lanterna com os painéis
+function checkLanternCollision() {
+  const hoveredEl = document.elementFromPoint(mouseX, mouseY);
+
+  if (
+    hoveredEl &&
+    hoveredEl.matches('img[alt="Panel 5"], img[alt="Panel 6"]')
+  ) {
+    root.classList.add("no-lantern");
+  } else {
+    root.classList.remove("no-lantern");
   }
 }
 
-document.addEventListener("mousemove", update);
-document.addEventListener("touchmove", update);
-
 /* ==========================
-   SCROLL AUTOMÁTICO POR BORDA
+   HANDLERS DE INPUT
 ========================== */
 
-const edgeSize = 120;
-const maxSpeed = 12;
+function handleInput(e) {
+  let x, y;
+
+  if (e.type.startsWith("touch")) {
+    lastInputType = "TOUCH";
+    isTouching = true;
+    x = e.touches[0].clientX;
+    y = e.touches[0].clientY;
+  } else {
+    lastInputType = "MOUSE";
+    isTouching = false; // Mouse não é "touch"
+    x = e.clientX;
+    y = e.clientY;
+  }
+
+  if (x !== undefined && y !== undefined) {
+    updateState(x, y);
+  }
+}
+
+function handleTouchEnd() {
+  isTouching = false;
+}
+
+// Listeners de movimento e interação
+window.addEventListener("mousemove", handleInput);
+window.addEventListener("touchstart", handleInput, { passive: true });
+window.addEventListener("touchmove", handleInput, { passive: true });
+window.addEventListener("touchend", handleTouchEnd);
+
+// Listener de Scroll
+window.addEventListener("scroll", checkLanternCollision, { passive: true });
+
+/* ==========================
+   SCROLL AUTOMÁTICO
+========================== */
+
+const edgeSize = 100; // Tamanho da borda ativa
+const maxSpeed = 15; // Velocidade máxima de scroll
 
 function autoScroll() {
+  // Se for Touch e o usuário soltou o dedo, não faz scroll.
+  // Pra scroll infinito no mobile depois de um toque só na borda.
+  if (lastInputType === "TOUCH" && !isTouching) {
+    requestAnimationFrame(autoScroll);
+    return;
+  }
+
   const vh = window.innerHeight;
   let speed = 0;
 
+  // Lógica de Scroll com suavização nas bordas
   if (mouseY < edgeSize) {
-    speed = -maxSpeed * (1 - mouseY / edgeSize);
+    // Borda superior
+    const intensity = (edgeSize - mouseY) / edgeSize;
+    speed = -maxSpeed * intensity;
   } else if (mouseY > vh - edgeSize) {
-    speed = maxSpeed * (1 - (vh - mouseY) / edgeSize);
+    // Borda inferior
+    const intensity = (mouseY - (vh - edgeSize)) / edgeSize;
+    speed = maxSpeed * intensity;
   }
 
   if (speed !== 0) {
@@ -43,44 +111,6 @@ function autoScroll() {
 }
 
 autoScroll();
-
-/* ==========================
-   CONTROLE ROBUSTO DA LANTERNA
-   (penúltimo + último quadro)
-========================== */
-
-const lightPanels = document.querySelectorAll(
-  'img[alt="Panel 5"], img[alt="Panel 6"]',
-);
-const root = document.documentElement;
-
-let lanternDisabledByLightPanel = false;
-
-lightPanels.forEach((panel) => {
-  panel.addEventListener("mouseenter", () => {
-    lanternDisabledByLightPanel = true;
-    root.classList.add("no-lantern");
-  });
-
-  panel.addEventListener("mouseleave", () => {
-    lanternDisabledByLightPanel = false;
-    root.classList.remove("no-lantern");
-  });
-});
-
-// Mouse sai da janela
-window.addEventListener("mouseleave", () => {
-  if (!lanternDisabledByLightPanel) {
-    root.classList.remove("no-lantern");
-  }
-});
-
-// Troca de aba / foco
-document.addEventListener("visibilitychange", () => {
-  if (!document.hidden && !lanternDisabledByLightPanel) {
-    root.classList.remove("no-lantern");
-  }
-});
 
 /* ==========================
    PLAYER DE ÁUDIO
